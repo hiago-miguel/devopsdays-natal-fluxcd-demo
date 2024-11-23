@@ -9,10 +9,23 @@ spec:
   path: ./kustomize
   prune: true
   retryInterval: 2m0s
-  replicaCount: 1
+  # uncomment the line below to check a reconciliation error in flux ;)
+  # replicaCount: 1 
   sourceRef:
     kind: GitRepository
     name: podinfo
   targetNamespace: default
   timeout: 3m0s
   wait: true
+  # To customize a deployment from a repository you don’t control, you can use Flux in-line patches
+  patches:
+    - patch: |-
+        apiVersion: autoscaling/v2
+        kind: HorizontalPodAutoscaler
+        metadata:
+          name: podinfo
+        spec:
+          minReplicas: 1         
+      target:
+        name: podinfo
+        kind: HorizontalPodAutoscaler
