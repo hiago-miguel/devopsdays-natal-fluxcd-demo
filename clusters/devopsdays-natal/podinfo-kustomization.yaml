@@ -9,6 +9,7 @@ spec:
   path: ./kustomize
   prune: true
   retryInterval: 2m0s
+  replicaCount: 1
   sourceRef:
     kind: GitRepository
     name: podinfo
